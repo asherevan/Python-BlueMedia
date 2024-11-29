@@ -5,6 +5,7 @@ from gi.repository import GLib
 
 class BluetoothMediaController(dbus.service.Object):
     def __init__(self, device_address):
+        dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
         dbus.service.Object.__init__(self, dbus.SystemBus(), "/org/bluez")
         self.bus = dbus.SystemBus()
         self.device_path = f"/org/bluez/hci0/dev_{device_address.replace(':', '_')}"
@@ -58,8 +59,7 @@ class BluetoothMediaController(dbus.service.Object):
 
 
 if __name__ == "__main__":
-    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
-    device_address = '90:8C:43:40:14:F4'
+    device_address = '00:00:00:00:00:00'
     controller = BluetoothMediaController(device_address)
     loop = GLib.MainLoop()
 
